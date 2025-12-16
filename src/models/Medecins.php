@@ -48,4 +48,19 @@ class Medecin {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
+
+     public function delete($id) {
+        $sql = "DELETE FROM medecins WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    
+    public function count() {
+        $sql = "SELECT COUNT(*) as total FROM medecins";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
 }
