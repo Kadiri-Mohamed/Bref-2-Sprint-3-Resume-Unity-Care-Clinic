@@ -60,5 +60,6 @@ class Patient {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
     }
+    
 }   
 ?>
