@@ -28,3 +28,11 @@ class Medecin {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+     public function create($data) {
+        $sql = "INSERT INTO medecins (nom, prenom, specialite, department_id, email, telephone) 
+                VALUES (:nom, :prenom, :specialite, :department_id, :email, :telephone)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+}
