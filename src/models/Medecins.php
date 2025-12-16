@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/Database.php';
+require_once '../config/database.php';
 
 class Medecin {
     private $conn;
@@ -32,6 +32,19 @@ class Medecin {
      public function create($data) {
         $sql = "INSERT INTO medecins (nom, prenom, specialite, department_id, email, telephone) 
                 VALUES (:nom, :prenom, :specialite, :department_id, :email, :telephone)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+    public function update($id, $data) {
+        $sql = "UPDATE medecins 
+                SET nom = :nom, 
+                    prenom = :prenom, 
+                    specialite = :specialite, 
+                    department_id = :department_id, 
+                    email = :email, 
+                    telephone = :telephone 
+                WHERE id = :id";
+        $data['id'] = $id;
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
