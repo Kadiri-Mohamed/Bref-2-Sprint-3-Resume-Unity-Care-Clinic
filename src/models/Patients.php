@@ -22,6 +22,14 @@ class Patient {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function create($data) {
+        $sql = "INSERT INTO patients (nom, prenom, date_naissance, telephone, email, adresse) 
+                VALUES (:nom, :prenom, :date_naissance, :telephone, :email, :adresse)";
+        
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
     
 }
 ?>
