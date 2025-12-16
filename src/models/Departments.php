@@ -23,4 +23,10 @@ class Department {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+     public function create($data) {
+        $sql = "INSERT INTO departments (nom, description) VALUES (:nom, :description)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+
 }
