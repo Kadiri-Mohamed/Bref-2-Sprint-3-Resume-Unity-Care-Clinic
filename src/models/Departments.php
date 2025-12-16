@@ -36,4 +36,11 @@ class Department {
         return $stmt->execute($data);
     }
 
+    public function delete($id) {
+        $sql = "DELETE FROM departments WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
 }
