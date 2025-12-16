@@ -8,7 +8,7 @@ $error = '';
 $modalAction = '';
 $modalDepartment = null;
 
-// Handle form submissions
+// Handle submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     if ($action === 'add') {
@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':description' => $_POST['description'] ?? ''
         ];
         if ($departmentModel->create($data)) {
-            $message = 'Departement ajoute avec succes';
+            $message = 'Departement added with succes';
         } else {
-            $error = 'Erreur lors de l\'ajout du departement';
+            $error = 'Error on creation';
         }
     } elseif ($action === 'edit') {
         $id = $_POST['id'] ?? '';
@@ -28,19 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':description' => $_POST['description'] ?? ''
         ];
         if ($departmentModel->update($id, $data)) {
-            $message = 'Departement modifie avec succes';
+            $message = 'Departement updated with succes';
         } else {
-            $error = 'Erreur lors de la modification';
+            $error = 'Error on update';
         }
     }
 }
 
-// Handle delete
+// delete
 if (isset($_GET['delete'])) {
     if ($departmentModel->delete($_GET['delete'])) {
-        $message = 'Departement supprime avec succes';
+        $message = 'Department deleted with succes';
     } else {
-        $error = 'Erreur lors de la suppression';
+        $error = 'Error on delete';
     }
 }
 
@@ -61,99 +61,7 @@ $departments = $departmentModel->getAll();
     <title>Gestion des Departements - Unity Care Clinic</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #134686;
-            --secondary: #ED3F27;
-            --accent: #FEB21A;
-            --light: #FDF4E3;
-        }
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-        }
-        .navbar {
-            background-color: var(--primary) !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background-color: #0d2652;
-            border-color: #0d2652;
-        }
-        .btn-secondary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-        }
-        .btn-secondary:hover {
-            background-color: #c82f1f;
-            border-color: #c82f1f;
-        }
-        .btn-warning {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .btn-warning:hover {
-            background-color: #ffa500;
-            border-color: #ffa500;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--primary);
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(19, 70, 134, 0.05);
-        }
-        .table thead {
-            background-color: var(--primary);
-            color: white;
-        }
-        .alert-success {
-            background-color: rgba(254, 178, 26, 0.2);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .alert-danger {
-            background-color: rgba(237, 63, 39, 0.2);
-            border-color: var(--secondary);
-            color: var(--secondary);
-        }
-        .form-control, .form-select {
-            border-color: var(--primary);
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
-        }
-        .page-title {
-            color: var(--primary);
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .badge-primary {
-            background-color: var(--primary);
-        }
-        .action-buttons a, .action-buttons button {
-            margin: 0 2px;
-        }
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .modal-header {
-            background-color: var(--primary);
-            color: white;
-        }
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
-    </style>
+    <link rel="stylesheet" href="../public/style.css">
 
     <script>
         function editDepartment(department) {

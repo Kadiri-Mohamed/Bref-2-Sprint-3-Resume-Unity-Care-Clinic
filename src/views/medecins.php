@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($medecinModel->create($data)) {
             $message = 'Medecin added with success';
         } else {
-            $error = 'Error when adding medecin';
+            $error = 'Error on creation';
         }
     } elseif ($action === 'edit') {
         $id = $_POST['id'] ?? '';
@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':telephone' => $_POST['telephone'] ?? ''
         ];
         if ($medecinModel->update($id, $data)) {
-            $message = 'Medecin modifie avec succès';
+            $message = 'Medecin modified with success';
         } else {
-            $error = 'Erreur lors de la modification';
+            $error = 'Error on modification';
         }
     }
 }
@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //  delete
 if (isset($_GET['delete'])) {
     if ($medecinModel->delete($_GET['delete'])) {
-        $message = 'Medecin supprime avec succès';
+        $message = 'Medecin deleted with success';
     } else {
-        $error = 'Erreur lors de la suppression';
+        $error = 'Error on deletion';
     }
 }
 
