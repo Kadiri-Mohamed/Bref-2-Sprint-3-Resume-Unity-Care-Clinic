@@ -63,4 +63,12 @@ class Medecin {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
     }
+
+      public function getByDepartment($department_id) {
+        $sql = "SELECT * FROM medecins WHERE department_id = :department_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':department_id', $department_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
