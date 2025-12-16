@@ -29,4 +29,11 @@ class Department {
         return $stmt->execute($data);
     }
 
+    public function update($id, $data) {
+        $sql = "UPDATE departments SET nom = :nom, description = :description WHERE id = :id";
+        $data['id'] = $id;
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+
 }
