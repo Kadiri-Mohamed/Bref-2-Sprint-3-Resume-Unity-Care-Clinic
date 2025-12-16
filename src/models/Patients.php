@@ -30,6 +30,21 @@ class Patient {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
+
+        public function update($id, $data) {
+        $sql = "UPDATE patients 
+                SET nom = :nom, 
+                    prenom = :prenom, 
+                    date_naissance = :date_naissance, 
+                    telephone = :telephone, 
+                    email = :email, 
+                    adresse = :adresse 
+                WHERE id = :id";
+        
+        $data['id'] = $id;
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
     
-}
+}   
 ?>
