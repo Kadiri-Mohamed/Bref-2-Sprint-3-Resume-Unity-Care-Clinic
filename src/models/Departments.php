@@ -43,4 +43,12 @@ class Department {
         return $stmt->execute();
     }
 
+     public function count() {
+        $sql = "SELECT COUNT(*) as total FROM departments";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
+
 }
