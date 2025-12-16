@@ -1,0 +1,68 @@
+ :root {
+            --primary: #134686;
+            --secondary: #ED3F27;
+            --accent: #FEB21A;
+            --light: #FDF4E3;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .stat-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card i {
+            font-size: 3rem;
+            opacity: 0.8;
+        }
+
+        .card-patients {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d2652 100%);
+        }
+
+        .card-departments {
+            background: linear-gradient(135deg, var(--secondary) 0%, #c82f1f 100%);
+        }
+
+        .card-medecins {
+            background: linear-gradient(135deg, var(--accent) 0%, #ffa500 100%);
+            color: var(--primary);
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--primary);
+            border: none;
+        }
+
+        .card-header {
+            background-color: var(--primary) !important;
+            color: white !important;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(19, 70, 134, 0.05);
+        }
+
+        .bg-primary {
+            background-color: var(--primary) !important;
+        }
+
+        .text-primary {
+            color: var(--primary) !important;
+        }
+
+        .navbar-dark {
+            background-color: var(--primary) !important;
+        }
