@@ -47,7 +47,7 @@ class Patient {
     }
     
      public function delete($id) {
-        $sql = "DELETE FROM patients WHERE id = :id";
+        $sql = "DELETE FROM patients WHERE id = :id"; 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
@@ -60,6 +60,6 @@ class Patient {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'];
     }
-    
+
 }   
 ?>
