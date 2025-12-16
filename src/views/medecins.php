@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':telephone' => $_POST['telephone'] ?? ''
         ];
         if ($medecinModel->create($data)) {
-            $message = 'Medecin ajoute avec succès';
+            $message = 'Medecin added with success';
         } else {
-            $error = 'Erreur lors de l\'ajout du medecin';
+            $error = 'Error when adding medecin';
         }
     } elseif ($action === 'edit') {
         $id = $_POST['id'] ?? '';
