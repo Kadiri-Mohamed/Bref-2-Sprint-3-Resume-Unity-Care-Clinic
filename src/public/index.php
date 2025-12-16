@@ -19,8 +19,18 @@ $recentPatients = $patientModel->getAll();
 $recentPatients = array_slice($recentPatients, 0, 5);
 
 // departments
-$recentDepartments = $departmentModel->getAll();
-$recentDepartments = array_slice($recentDepartments, 0, 5);
+$Departments = $departmentModel->getAll();
+$recentDepartments = array_slice($Departments, 0, 5);
+
+$departmentLabels = [];
+$departmentMedecinsCount = [];
+
+foreach ($Departments as $department) {
+    $departmentLabels[] = $department['nom'];
+    $departmentMedecinsCount[] = count(
+        $medecinModel->getByDepartment($department['id'])
+    );
+}
 
 // medecins
 $recentMedecins = $medecinModel->getAll();
@@ -108,16 +118,7 @@ $recentMedecins = $medecinModel->getAll();
                     <div class="stat-card card-departments">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5>Departements</h5>
-                                <h2 class="fw-bold"><?php echo $totalDepartments; ?></h2>
-                                <p class="mb-0">
-                                    <a href="../views/departments.php" class="text-white text-decoration-none">
-                                        Gerer <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </p>
-                            </div>
-                            <div>
-                                <i class="fas fa-building"></i>
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -225,7 +226,8 @@ $recentMedecins = $medecinModel->getAll();
                                                         <i class="fas fa-user-circle text-primary"></i>
                                                         <?php echo htmlspecialchars($departement['nom']); ?>
                                                     </td>
-                                                    <td><?php echo count($medecinModel->getByDepartment($departement['id'])) ?></td>
+                                                    <td><?php echo count($medecinModel->getByDepartment($departement['id'])) ?>
+                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
@@ -281,7 +283,38 @@ $recentMedecins = $medecinModel->getAll();
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($departmentLabels); ?>,
+                datasets: [{
+                    label: 'Nombre de medecins',
+                    data: <?php echo json_encode($departmentMedecinsCount); ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+
+
+    </script>
 </body>
 
 </html>
