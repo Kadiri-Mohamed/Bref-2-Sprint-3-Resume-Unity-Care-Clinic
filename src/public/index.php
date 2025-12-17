@@ -1,345 +1,203 @@
 <?php
 require_once '../config/database.php';
-require_once '../models/Medecins.php';
-require_once '../models/Departments.php';
-require_once '../models/Patients.php';
+require_once '../config/Language.php';
 
-// instances
+// Instancier les modèles
+require_once '../models/Patients.php';
+require_once '../models/Departments.php';
+require_once '../models/Medecins.php';
+
 $patientModel = new Patient();
 $departmentModel = new Department();
 $medecinModel = new Medecin();
 
-// counts
+// Compter les éléments
 $totalPatients = $patientModel->count();
 $totalDepartments = $departmentModel->count();
 $totalMedecins = $medecinModel->count();
 
-// recent patients
+// Récents patients (5 derniers)
 $recentPatients = $patientModel->getAll();
 $recentPatients = array_slice($recentPatients, 0, 5);
-
-// departments
-$Departments = $departmentModel->getAll();
-$recentDepartments = array_slice($Departments, 0, 5);
-
-$departmentLabels = [];
-$departmentMedecinsCount = [];
-
-foreach ($Departments as $department) {
-    $departmentLabels[] = $department['nom'];
-    $departmentMedecinsCount[] = count(
-        $medecinModel->getByDepartment($department['id'])
-    );
-}
-
-// medecins
-$recentMedecins = $medecinModel->getAll();
-// $recentMedecins = array_slice($recentMedecins, 0, 5);
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="<?= $lang ?>" dir="<?= $lang == 'ar' ? 'rtl' : 'ltr' ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Care Clinic</title>
+    <title>Unity Care Clinic - <?= $t('dashboard_title') ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    
+    <?php if ($lang == 'ar'): ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <?php endif; ?>
 </head>
-
 <body>
-    <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.php">
-                    <i class="fas fa-hospital"></i> Unity Care Clinic
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.php">
-                                <i class="fas fa-home"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/patients.php">
-                                <i class="fas fa-user-injured"></i> Patients
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/departments.php">
-                                <i class="fas fa-building"></i> Departments
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../views/medecins.php">
-                                <i class="fas fa-user-md"></i> Medecins
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">
+                <i class="fas fa-hospital"></i> Unity Care Clinic
+            </a>
+            
+            <!-- Sélecteur de langue -->
+            <div class="language-selector me-3">
+                <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
+                    <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
+                    <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
+                    <option value="ar" <?= $lang == 'ar' ? 'selected' : '' ?>><?= $t('arabic') ?></option>
+                </select>
             </div>
-        </nav>
-    </header>
-    <main class="main">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.php">
+                            <i class="fas fa-home"></i> <?= $t('dashboard') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/patients.php">
+                            <i class="fas fa-user-injured"></i> <?= $t('patients') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/departments.php">
+                            <i class="fas fa-building"></i> <?= $t('departments') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/medecins.php">
+                            <i class="fas fa-user-md"></i> <?= $t('medecins') ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <div class="container mt-4">
-            <h1 class="mb-4">
-                <i class="fas fa-chart-line"></i> Tableau de Bord
-            </h1>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="stat-card card-patients">
-                        <div class="d-flex justify-content-between align-items-center">
+    <div class="container mt-4">
+        <h1 class="mb-4">
+            <i class="fas fa-tachometer-alt"></i> <?= $t('dashboard_title') ?>
+        </h1>
+        
+        <!-- Statistiques -->
+        <div class="row">
+            <!-- Patients -->
+            <div class="col-md-4 mb-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
                             <div>
-                                <h5>Total Patients</h5>
-                                <h2 class="fw-bold"><?php echo $totalPatients; ?></h2>
+                                <h5><?= $t('total_patients') ?></h5>
+                                <h2><?= $totalPatients ?></h2>
                                 <p class="mb-0">
                                     <a href="../views/patients.php" class="text-white text-decoration-none">
-                                        Voir tous <i class="fas fa-arrow-right"></i>
+                                        <?= $t('view_all') ?> <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </p>
                             </div>
-                            <div>
-                                <i class="fas fa-user-injured"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <!-- Medecins -->
-                <div class="col-md-4">
-                    <div class="stat-card card-medecins">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5>Medecins</h5>
-                                <h2 class="fw-bold"><?php echo $totalMedecins; ?></h2>
-                                <p class="mb-0">
-                                    <a href="../views/medecins.php" class="text-white text-decoration-none">
-                                        Voir tous <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </p>
-                            </div>
-                            <div>
-                                <i class="fas fa-user-md"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Departements -->
-                <div class="col-md-4">
-                    <div class="stat-card card-departments">
-                        <h5>Departement</h5>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <canvas id="myChart"></canvas>
-                            </div>
+                            <i class="fas fa-users fa-3x"></i>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Patients -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">
-                                <i class="fas fa-clock"></i> Patients Recents
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom Complet</th>
-                                            <th>Date de Naissance</th>
-                                            <th>Telephone</th>
-                                            <th>Email</th>
-                                            <th>Date d'ajout</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (empty($recentPatients)): ?>
-                                            <tr>
-                                                <td colspan="5" class="text-center text-muted">
-                                                    Aucun patient enregistre
-                                                </td>
-                                            </tr>
-                                        <?php else: ?>
-                                            <?php foreach ($recentPatients as $patient): ?>
-                                                <tr>
-                                                    <td>
-                                                        <i class="fas fa-user-circle text-primary"></i>
-                                                        <?php echo htmlspecialchars($patient['nom'] . ' ' . $patient['prenom']); ?>
-                                                    </td>
-                                                    <td><?php echo date('d/m/Y', strtotime($patient['date_naissance'])); ?></td>
-                                                    <td><?php echo htmlspecialchars($patient['telephone']); ?></td>
-                                                    <td><?php echo htmlspecialchars($patient['email']); ?></td>
-                                                    <td><?php echo date('d/m/Y H:i', strtotime($patient['created_at'])); ?></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+            <!-- Médecins -->
+            <div class="col-md-4 mb-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5><?= $t('total_medecins') ?></h5>
+                                <h2><?= $totalMedecins ?></h2>
+                                <p class="mb-0">
+                                    <a href="../views/medecins.php" class="text-white text-decoration-none">
+                                        <?= $t('view_all') ?> <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </p>
                             </div>
+                            <i class="fas fa-user-md fa-3x"></i>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row my-4">
-                <div class="col-6">
-                    <!-- deparetemenets -->
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">
-                                <i class="fas fa-clock"></i> Departements
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Nombre de medecins</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (empty($recentDepartments)): ?>
-                                            <tr>
-                                                <td colspan="2" class="text-center text-muted">
-                                                    Aucun departement enregistre
-                                                </td>
-                                            </tr>
-                                        <?php else: ?>
-                                            <?php foreach ($recentDepartments as $departement): ?>
-                                                <tr>
-                                                    <td>
-                                                        <i class="fas fa-user-circle text-primary"></i>
-                                                        <?php echo htmlspecialchars($departement['nom']); ?>
-                                                    </td>
-                                                    <td><?php echo count($medecinModel->getByDepartment($departement['id'])) ?>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
+            
+            <!-- Départements -->
+            <div class="col-md-4 mb-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5><?= $t('total_departments') ?></h5>
+                                <h2><?= $totalDepartments ?></h2>
+                                <p class="mb-0">
+                                    <a href="../views/departments.php" class="text-dark text-decoration-none">
+                                        <?= $t('view_all') ?> <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <!-- medecins -->
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0">
-                                <i class="fas fa-clock"></i> Medecins
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>Departement</th>
-                                            <th>Specialite</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (empty($recentMedecins)): ?>
-                                            <tr>
-                                                <td colspan="3" class="text-center text-muted">
-                                                    Aucun medecin enregistre
-                                                </td>
-                                            </tr>
-                                        <?php else: ?>
-                                            <?php foreach ($recentMedecins as $medecin): ?>
-                                                <tr>
-                                                    <td>
-                                                        <i class="fas fa-user-circle text-primary"></i>
-                                                        <?php echo htmlspecialchars($medecin['nom']); ?>
-                                                    </td>
-                                                    <td><?php echo htmlspecialchars($medecin['department_nom']); ?></td>
-                                                    <td><?php echo htmlspecialchars($medecin['specialite']); ?></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <i class="fas fa-hospital fa-3x"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <!-- Patients récents -->
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-history"></i> <?= $t('recent_patients') ?></h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?= $t('id') ?></th>
+                                <th><?= $t('name') ?></th>
+                                <th><?= $t('first_name') ?></th>
+                                <th><?= $t('email') ?></th>
+                                <th><?= $t('phone') ?></th>
+                                <th><?= $t('admission_date') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($recentPatients)): ?>
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">
+                                        Aucun patient enregistré
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach($recentPatients as $patient): ?>
+                                <tr>
+                                    <td><span class="badge bg-primary"><?= $patient['id'] ?></span></td>
+                                    <td><?= htmlspecialchars($patient['nom']) ?></td>
+                                    <td><?= htmlspecialchars($patient['prenom']) ?></td>
+                                    <td><?= htmlspecialchars($patient['email']) ?></td>
+                                    <td><?= htmlspecialchars($patient['telephone']) ?></td>
+                                    <td><?= date('d/m/Y', strtotime($patient['created_at'])) ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const ctx = document.getElementById('myChart');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: <?php echo json_encode($departmentLabels); ?>,
-                datasets: [{
-                    label: 'Nombre de medecins',
-                    data: <?php echo json_encode($departmentMedecinsCount); ?>,
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    borderColor: 'rgba(212, 212, 212, 1)',
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
-                    tooltip: {
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff'
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#ffffff' 
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            color: '#ffffff',
-                            stepSize: 1
-                        },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)'
-                        }
-                    }
-                }
-            }
-        })
-
-
-
+        function changeLanguage(lang) {
+            window.location.href = '?lang=' + lang;
+        }
     </script>
 </body>
-
 </html>
