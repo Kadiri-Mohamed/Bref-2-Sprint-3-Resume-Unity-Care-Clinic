@@ -1,366 +1,161 @@
- :root {
-            --primary: #134686;
-            --secondary: #ED3F27;
-            --accent: #FEB21A;
-            --light: #FDF4E3;
-        }
+:root {
+    --primary: #134686;
+    --secondary: #ED3F27;
+    --accent: #FEB21A;
+    --light: #FDF4E3;
+}
 
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-        }
+body {
+    background-color: var(--light);
+    color: var(--primary);
+}
 
-        .stat-card {
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            color: white;
-            transition: transform 0.3s;
-        }
+.navbar,
+.navbar-dark {
+    background-color: var(--primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--primary);
+}
 
-        .stat-card i {
-            font-size: 3rem;
-            opacity: 0.8;
-        }
+.card-header {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
 
-        .card-patients {
-            background: linear-gradient(135deg, var(--primary) 0%, #0d2652 100%);
-        }
+.stat-card {
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+    transition: transform 0.3s;
+}
 
-        .card-departments {
-            background: linear-gradient(135deg, var(--secondary) 0%, #c82f1f 100%);
-        }
+.stat-card:hover {
+    transform: translateY(-5px);
+}
 
-        .card-medecins {
-            background: linear-gradient(135deg, var(--accent) 0%, #ffa500 100%);
-            color: var(--primary);
-        }
+.stat-card i {
+    font-size: 3rem;
+    opacity: 0.8;
+}
 
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid var(--primary);
-            border: none;
-        }
+.card-patients {
+    background: linear-gradient(135deg, var(--primary) 0%, #0d2652 100%);
+}
 
-        .card-header {
-            background-color: var(--primary) !important;
-            color: white !important;
-        }
+.card-departments {
+    background: linear-gradient(135deg, var(--secondary) 0%, #c82f1f 100%);
+    color: white;
+}
 
-        .table-hover tbody tr:hover {
-            background-color: rgba(19, 70, 134, 0.05);
-        }
+.card-medecins {
+    background: linear-gradient(135deg, var(--accent) 0%, #ffa500 100%);
+    color: var(--primary);
+}
 
-        .bg-primary {
-            background-color: var(--primary) !important;
-        }
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
 
-        .text-primary {
-            color: var(--primary) !important;
-        }
+.btn-primary:hover {
+    background-color: #0d2652;
+    border-color: #0d2652;
+}
 
-        .navbar-dark {
-            background-color: var(--primary) !important;
-        }
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
 
-         :root {
-            --primary: #134686;
-            --secondary: #ED3F27;
-            --accent: #FEB21A;
-            --light: #FDF4E3;
-        }
+.btn-secondary:hover {
+    background-color: #c82f1f;
+    border-color: #c82f1f;
+}
 
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-        }
+.btn-warning {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--primary);
+}
 
-        .navbar {
-            background-color: var(--primary) !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+.btn-warning:hover {
+    background-color: #ffa500;
+    border-color: #ffa500;
+}
 
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
+.table-hover tbody tr:hover,
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(19, 70, 134, 0.05);
+}
 
-        .btn-primary:hover {
-            background-color: #0d2652;
-            border-color: #0d2652;
-        }
+.table thead {
+    background-color: var(--primary);
+    color: white;
+}
 
-        .btn-secondary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-        }
+.alert-success {
+    background-color: rgba(254, 178, 26, 0.2);
+    border-color: var(--accent);
+    color: var(--primary);
+}
 
-        .btn-secondary:hover {
-            background-color: #c82f1f;
-            border-color: #c82f1f;
-        }
+.alert-danger {
+    background-color: rgba(237, 63, 39, 0.2);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
 
-        .btn-warning {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
+.form-control,
+.form-select {
+    border-color: var(--primary);
+}
 
-        .btn-warning:hover {
-            background-color: #ffa500;
-            border-color: #ffa500;
-        }
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
+}
 
-        .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid var(--primary);
-        }
+.form-label {
+    color: var(--primary);
+    font-weight: 500;
+}
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(19, 70, 134, 0.05);
-        }
+.badge-primary {
+    background-color: var(--primary);
+}
 
-        .table thead {
-            background-color: var(--primary);
-            color: white;
-        }
+.action-buttons a,
+.action-buttons button {
+    margin: 0 2px;
+}
 
-        .alert-success {
-            background-color: rgba(254, 178, 26, 0.2);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
+.page-title {
+    color: var(--primary);
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
 
-        .alert-danger {
-            background-color: rgba(237, 63, 39, 0.2);
-            border-color: var(--secondary);
-            color: var(--secondary);
-        }
+.modal-header {
+    background-color: var(--primary);
+    color: white;
+}
 
-        .form-control,
-        .form-select {
-            border-color: var(--primary);
-        }
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
 
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
-        }
+.bg-primary {
+    background-color: var(--primary) !important;
+}
 
-        .page-title {
-            color: var(--primary);
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        .badge-primary {
-            background-color: var(--primary);
-        }
-
-        .action-buttons a,
-        .action-buttons button {
-            margin: 0 2px;
-        }
-
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .modal-header {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
-          :root {
-            --primary: #134686;
-            --secondary: #ED3F27;
-            --accent: #FEB21A;
-            --light: #FDF4E3;
-        }
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-        }
-        .navbar {
-            background-color: var(--primary) !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background-color: #0d2652;
-            border-color: #0d2652;
-        }
-        .btn-secondary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-        }
-        .btn-secondary:hover {
-            background-color: #c82f1f;
-            border-color: #c82f1f;
-        }
-        .btn-warning {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .btn-warning:hover {
-            background-color: #ffa500;
-            border-color: #ffa500;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--primary);
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(19, 70, 134, 0.05);
-        }
-        .table thead {
-            background-color: var(--primary);
-            color: white;
-        }
-        .alert-success {
-            background-color: rgba(254, 178, 26, 0.2);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .alert-danger {
-            background-color: rgba(237, 63, 39, 0.2);
-            border-color: var(--secondary);
-            color: var(--secondary);
-        }
-        .form-control, .form-select {
-            border-color: var(--primary);
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
-        }
-        .page-title {
-            color: var(--primary);
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .badge-primary {
-            background-color: var(--primary);
-        }
-        .action-buttons a, .action-buttons button {
-            margin: 0 2px;
-        }
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .modal-header {
-            background-color: var(--primary);
-            color: white;
-        }
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
-         :root {
-            --primary: #134686;
-            --secondary: #ED3F27;
-            --accent: #FEB21A;
-            --light: #FDF4E3;
-        }
-        body {
-            background-color: var(--light);
-            color: var(--primary);
-        }
-        .navbar {
-            background-color: var(--primary) !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background-color: #0d2652;
-            border-color: #0d2652;
-        }
-        .btn-secondary {
-            background-color: var(--secondary);
-            border-color: var(--secondary);
-        }
-        .btn-secondary:hover {
-            background-color: #c82f1f;
-            border-color: #c82f1f;
-        }
-        .btn-warning {
-            background-color: var(--accent);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .btn-warning:hover {
-            background-color: #ffa500;
-            border-color: #ffa500;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--primary);
-        }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(19, 70, 134, 0.05);
-        }
-        .table thead {
-            background-color: var(--primary);
-            color: white;
-        }
-        .alert-success {
-            background-color: rgba(254, 178, 26, 0.2);
-            border-color: var(--accent);
-            color: var(--primary);
-        }
-        .alert-danger {
-            background-color: rgba(237, 63, 39, 0.2);
-            border-color: var(--secondary);
-            color: var(--secondary);
-        }
-        .form-control, .form-select {
-            border-color: var(--primary);
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
-        }
-        .page-title {
-            color: var(--primary);
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .badge-primary {
-            background-color: var(--primary);
-        }
-        .action-buttons a, .action-buttons button {
-            margin: 0 2px;
-        }
-        .form-label {
-            color: var(--primary);
-            font-weight: 500;
-        }
-        .modal-header {
-            background-color: var(--primary);
-            color: white;
-        }
-        .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-        }
+.text-primary {
+    color: var(--primary) !important;
+}

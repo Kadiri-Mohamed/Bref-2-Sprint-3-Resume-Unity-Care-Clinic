@@ -113,17 +113,7 @@ $recentMedecins = $medecinModel->getAll();
                     </div>
                 </div>
 
-                <!-- Departements -->
-                <div class="col-md-4">
-                    <div class="stat-card card-departments">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <canvas id="myChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <!-- Medecins -->
                 <div class="col-md-4">
                     <div class="stat-card card-medecins">
@@ -143,8 +133,19 @@ $recentMedecins = $medecinModel->getAll();
                         </div>
                     </div>
                 </div>
+                <!-- Departements -->
+                <div class="col-md-4">
+                    <div class="stat-card card-departments">
+                        <h5>Departement</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            
             <!-- Patients -->
             <div class="row mt-4">
                 <div class="col-12">
@@ -295,23 +296,47 @@ $recentMedecins = $medecinModel->getAll();
                 datasets: [{
                     label: 'Nombre de medecins',
                     data: <?php echo json_encode($departmentMedecinsCount); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 255, 255, 1)',
+                    borderColor: 'rgba(212, 212, 212, 1)',
+                    borderWidth: 1,
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    },
+                    tooltip: {
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff'
+                    }
+                },
                 scales: {
+                    x: {
+                        ticks: {
+                            color: '#ffffff' 
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
                     y: {
                         beginAtZero: true,
                         ticks: {
+                            color: '#ffffff',
                             stepSize: 1
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
                         }
                     }
                 }
             }
-        });
+        })
+
 
 
     </script>
