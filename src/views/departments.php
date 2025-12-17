@@ -5,49 +5,41 @@ require_once '../models/Departments.php';
 $departmentModel = new Department();
 $message = '';
 $error = '';
-$modalAction = '';
-$modalDepartment = null;
 
-// Handle submit
+// ADD / EDIT
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+    $action = $_POST['action'] ?? 'add';
+
+    $data = [
+        ':nom' => $_POST['nom'] ?? '',
+        ':description' => $_POST['description'] ?? ''
+    ];
+
     if ($action === 'add') {
-        $data = [
-            ':nom' => $_POST['nom'] ?? '',
-            ':description' => $_POST['description'] ?? ''
-        ];
         if ($departmentModel->create($data)) {
             $message = 'Departement added with succes';
         } else {
             $error = 'Error on creation';
         }
-    } elseif ($action === 'edit') {
-        $id = $_POST['id'] ?? '';
-        $data = [
-            ':nom' => $_POST['nom'] ?? '',
-            ':description' => $_POST['description'] ?? ''
-        ];
+    }
+
+    if ($action === 'edit') {
+        $id = $_POST['id'] ?? null;
         if ($departmentModel->update($id, $data)) {
-            $message = 'Departement updated with succes';
+            $message = 'Departement modified with succes';
         } else {
-            $error = 'Error on update';
+            $error = 'Error on modification';
         }
     }
 }
 
-// delete
+// DELETE
 if (isset($_GET['delete'])) {
     if ($departmentModel->delete($_GET['delete'])) {
-        $message = 'Department deleted with succes';
+        $message = 'Departement deleted with succes';
     } else {
-        $error = 'Error on delete';
+        $error = 'Error on deletion';
     }
-}
-
-// Load department for editing
-if (isset($_GET['edit'])) {
-    $modalAction = 'edit';
-    $modalDepartment = $departmentModel->getById($_GET['edit']);
 }
 
 $departments = $departmentModel->getAll();
@@ -55,6 +47,7 @@ $departments = $departmentModel->getAll();
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,43 +60,22 @@ $departments = $departmentModel->getAll();
         function editDepartment(department) {
             document.getElementById('departmentId').value = department.id;
             document.getElementById('nom').value = department.nom;
-            document.getElementById('description').value = department.description;
+            document.getElementById('description').value = department.description ?? '';
+
+            document.getElementById('action').value = 'edit';
             document.getElementById('departmentModalLabel').innerText = 'Modifier le Departement';
-            document.getElementById('departmentForm').dataset.action = 'edit';
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const departmentModal = document.getElementById('departmentModal');
-            if (departmentModal) {
-                departmentModal.addEventListener('hide.bs.modal', function () {
-                    document.getElementById('departmentForm').reset();
-                    document.getElementById('departmentId').value = '';
-                    document.getElementById('departmentModalLabel').innerText = 'Ajouter un Nouveau Departement';
-                    document.getElementById('departmentForm').dataset.action = 'add';
-                });
-            }
+        function resetDepartmentForm() {
+            document.getElementById('departmentForm').reset();
+            document.getElementById('departmentId').value = '';
+            document.getElementById('action').value = 'add';
+            document.getElementById('departmentModalLabel').innerText = 'Ajouter un Departement';
+        }
 
-            const departmentForm = document.getElementById('departmentForm');
-            if (departmentForm) {
-                departmentForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const action = this.dataset.action || 'add';
-                    const formData = new FormData(this);
-                    formData.set('action', action);
-
-                    fetch('?', {
-                        method: 'POST',
-                        body: formData
-                    }).then(response => {
-                        if (response.ok) {
-                            location.reload();
-                        }
-                    });
-                });
-            }
-        });
     </script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
@@ -146,24 +118,25 @@ $departments = $departmentModel->getAll();
         </h1>
 
         <?php if ($message): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle"></i> <?php echo $message; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="fas fa-check-circle"></i> <?= $message ?>
+                <button class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fas fa-exclamation-circle"></i> <?= $error ?>
+                <button class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
 
-        <div class="mb-3">
-            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#departmentModal">
-                <i class="fas fa-plus"></i> Ajouter un Departement
-            </button>
-        </div>
+
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#departmentModal"
+            onclick="resetDepartmentForm()">
+            <i class="fas fa-plus"></i> Ajouter un Departement
+        </button>
+
 
         <div class="card">
             <div class="card-body">
@@ -180,60 +153,67 @@ $departments = $departmentModel->getAll();
                         <tbody>
                             <?php foreach ($departments as $d): ?>
                                 <tr>
-                                    <td><span class="badge badge-primary"><?php echo htmlspecialchars($d['id']); ?></span></td>
-                                    <td><?php echo htmlspecialchars($d['nom']); ?></td>
-                                    <td><?php echo htmlspecialchars($d['description']); ?></td>
+                                    <td><span class="badge badge-primary"><?= $d['id'] ?></span></td>
+                                    <td><?= htmlspecialchars($d['nom']) ?></td>
+                                    <td><?= htmlspecialchars($d['description']) ?></td>
                                     <td class="action-buttons">
-                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#departmentModal" onclick="editDepartment(<?php echo htmlspecialchars(json_encode($d)); ?>)">
-                                            <i class="fas fa-edit"></i> Modifier
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#departmentModal"
+                                            onclick='editDepartment(<?= json_encode($d) ?>)'>
+                                            <i class="fas fa-edit"></i>
                                         </button>
-                                        <a href="?delete=<?php echo $d['id']; ?>" class="btn btn-sm btn-secondary" onclick="return confirm('Êtes-vous sûr?')">
-                                            <i class="fas fa-trash"></i> Supprimer
+
+                                        <a href="?delete=<?= $d['id'] ?>" class="btn btn-sm btn-secondary"
+                                            onclick="return confirm('Êtes-vous sûr ?')">
+                                            <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
 
-        <!-- Modal de formulaire -->
         <div class="modal fade" id="departmentModal" tabindex="-1">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <form method="POST" id="departmentForm" class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="departmentModalLabel">Ajouter un Nouveau Departement</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title" id="departmentModalLabel">
+                            Ajouter un Departement
+                        </h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form id="departmentForm" data-action="add" method="POST" onsubmit="validateForm">
-                        <div class="modal-body">
-                            <input type="hidden" id="departmentId" name="id">
-                            
-                            <div class="mb-3">
-                                <label for="nom" class="form-label">Nom du Departement</label>
-                                <input type="text" class="form-control" id="nom" name="nom" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
-                            </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="departmentId">
+                        <input type="hidden" name="action" id="action" value="add">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nom</label>
+                            <input type="text" name="nom" id="nom" class="form-control" required>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Enregistrer
-                            </button>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="3"></textarea>
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../utils/validation.js"></script>
+    <!-- <script src="../utils/validation.js"></script> -->
 </body>
+
 </html>
