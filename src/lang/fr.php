@@ -1,81 +1,55 @@
 <?php
 return [
     // Navigation
-    'dashboard' => 'Tableau de bord',
+    'dashboard' => 'Dashboard',
     'patients' => 'Patients',
-    'departments' => 'Départements',
-    'medecins' => 'Médecins',
+    'departments' => 'Departments',
+    'medecins' => 'Medecins',
     
-    // Titres
+    // Dashboard
     'dashboard_title' => 'Tableau de Bord',
-    'patients_title' => 'Gestion des Patients',
-    'departments_title' => 'Gestion des Départements',
-    'medecins_title' => 'Gestion des Médecins',
+    'total_patients' => 'Total Patients',
+    'total_medecins' => 'Medecins',
+    'total_departments' => 'Departement',
+    'view_all' => 'Voir tous',
+    'recent_patients' => 'Patients Recents',
+    'recent_departments' => 'Departements',
+    'recent_medecins' => 'Medecins',
+    'full_name' => 'Nom Complet',
+    'birth_date' => 'Date de Naissance',
+    'phone' => 'Telephone',
+    'email' => 'Email',
+    'admission_date' => 'Date d\'ajout',
+    'doctors_count' => 'Nombre de medecins',
+    'speciality' => 'Specialite',
+    'no_patients' => 'Aucun patient enregistre',
+    'no_departments' => 'Aucun departement enregistre',
+    'no_medecins' => 'Aucun medecin enregistre',
     
-    // Boutons
+    // Actions
     'add' => 'Ajouter',
     'edit' => 'Modifier',
     'delete' => 'Supprimer',
+    'update' => 'Update',
     'save' => 'Enregistrer',
     'cancel' => 'Annuler',
-    'update' => 'Mettre à jour',
     
     // Messages
-    'added_success' => 'ajouté avec succès',
-    'modified_success' => 'modifié avec succès',
-    'deleted_success' => 'supprimé avec succès',
-    'error_creation' => 'Erreur lors de la création',
-    'error_modification' => 'Erreur lors de la modification',
-    'error_deletion' => 'Erreur lors de la suppression',
-    
-    // Labels
-    'name' => 'Nom',
-    'first_name' => 'Prénom',
-    'description' => 'Description',
-    'speciality' => 'Spécialité',
-    'birth_date' => 'Date de naissance',
-    'phone' => 'Téléphone',
-    'email' => 'Email',
-    'address' => 'Adresse',
-    'department' => 'Département',
-    'select_department' => 'Sélectionner un département',
-    'actions' => 'Actions',
-    'recent_patients' => 'Patients Récents',
-    
-    // Statistiques
-    'total_patients' => 'Total Patients',
-    'total_medecins' => 'Total Médecins',
-    'total_departments' => 'Total Départements',
-    'view_all' => 'Voir tous',
-    
-    // Tableaux
-    'id' => 'ID',
-    'full_name' => 'Nom Complet',
-    'admission_date' => 'Date d\'admission',
-    'medecins_count' => 'Nombre de médecins',
+    'added_success' => 'ajouté avec succes',
+    'modified_success' => 'modifié avec succes',
+    'deleted_success' => 'supprimé avec succes',
+    'error_creation' => 'Error on creation',
+    'error_modification' => 'Error on modification',
+    'error_deletion' => 'Error on deletion',
     
     // Confirmation
-    'confirm_delete' => 'Êtes-vous sûr de vouloir supprimer ?',
-    'confirm_delete_patient' => 'Êtes-vous sûr de vouloir supprimer ce patient ?',
-    'confirm_delete_medecin' => 'Êtes-vous sûr de vouloir supprimer ce médecin ?',
-    'confirm_delete_department' => 'Êtes-vous sûr de vouloir supprimer ce département ?',
-    
-    // Modal
-    'add_patient' => 'Ajouter un Patient',
-    'edit_patient' => 'Modifier le Patient',
-    'add_medecin' => 'Ajouter un Médecin',
-    'edit_medecin' => 'Modifier le Médecin',
-    'add_department' => 'Ajouter un Département',
-    'edit_department' => 'Modifier le Département',
+    'confirm_delete' => 'Êtes-vous sûr ?',
+    'confirm_delete_patient' => 'U sure?',
+    'confirm_delete_medecin' => 'Êtes-vous sûr?',
+    'confirm_delete_department' => 'Êtes-vous sûr ?',
     
     // Langues
     'french' => 'Français',
     'english' => 'English',
-    'arabic' => 'العربية',
     'select_language' => 'Sélectionner la langue',
-    
-    // Titres pages
-    'gestion_patients' => 'Gestion des Patients',
-    'gestion_departements' => 'Gestion des Départements',
-    'gestion_medecins' => 'Gestion des Médecins',
 ];

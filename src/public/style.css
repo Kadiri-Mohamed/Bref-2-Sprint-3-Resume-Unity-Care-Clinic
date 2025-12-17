@@ -165,34 +165,28 @@ body {
     max-width: 150px;
 }
 
-/* RTL Support */
-[dir="rtl"] {
-    text-align: right;
+.language-selector .form-select-sm {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 0.875rem;
 }
 
-[dir="rtl"] .me-auto {
-    margin-right: 0 !important;
-    margin-left: auto !important;
+.language-selector .form-select-sm:focus {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(254, 178, 26, 0.25);
 }
 
-[dir="rtl"] .ms-auto {
-    margin-left: 0 !important;
-    margin-right: auto !important;
+.language-selector .form-select-sm option {
+    color: var(--primary);
+    background-color: white;
 }
 
-[dir="rtl"] .text-end {
-    text-align: left !important;
-}
-
-[dir="rtl"] .text-start {
-    text-align: right !important;
-}
-
-[dir="rtl"] .navbar-nav {
-    padding-right: 0;
-}
-
-[dir="rtl"] .modal-header .btn-close {
-    margin-left: 0;
-    margin-right: auto;
+@media (max-width: 768px) {
+    .language-selector {
+        max-width: 120px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
 }

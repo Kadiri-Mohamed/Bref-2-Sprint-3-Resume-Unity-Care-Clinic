@@ -89,7 +89,6 @@ $departments = $departmentModel->getAll();
                 <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
                     <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
                     <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
-                    <option value="ar" <?= $lang == 'ar' ? 'selected' : '' ?>><?= $t('arabic') ?></option>
                 </select>
             </div>
             

@@ -55,11 +55,12 @@ $patients = $patientModel->getAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="<?= $lang ?>" dir="<?= $lang == 'ar' ? 'rtl' : 'ltr' ?>">
+<html lang="<?= $lang ?>">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unity Care Clinic - <?= $t('patients_title') ?></title>
+    <title>Unity Care Clinic - Gestion des Patients</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../public/style.css">
@@ -68,8 +69,9 @@ $patients = $patientModel->getAll();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <?php endif; ?>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="../public/index.php">
                 <i class="fas fa-hospital"></i> Unity Care Clinic
@@ -80,7 +82,6 @@ $patients = $patientModel->getAll();
                 <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
                     <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
                     <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
-                    <option value="ar" <?= $lang == 'ar' ? 'selected' : '' ?>><?= $t('arabic') ?></option>
                 </select>
             </div>
             
@@ -116,7 +117,7 @@ $patients = $patientModel->getAll();
 
     <div class="container mt-4">
         <h1 class="page-title">
-            <i class="fas fa-user-injured"></i> <?= $t('gestion_patients') ?>
+            <i class="fas fa-user-injured"></i> Gestion des Patients
         </h1>
 
         <?php if ($message): ?>
@@ -135,7 +136,7 @@ $patients = $patientModel->getAll();
 
         <div class="mb-3">
             <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#patientModal">
-                <i class="fas fa-plus"></i> <?= $t('add') ?> <?= $t('patients') ?>
+                <i class="fas fa-plus"></i> <?= $t('add') ?> Patient
             </button>
         </div>
 
@@ -145,33 +146,34 @@ $patients = $patientModel->getAll();
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th><?= $t('id') ?></th>
-                                <th><?= $t('name') ?></th>
-                                <th><?= $t('first_name') ?></th>
-                                <th><?= $t('birth_date') ?></th>
-                                <th><?= $t('phone') ?></th>
-                                <th><?= $t('email') ?></th>
-                                <th><?= $t('address') ?></th>
-                                <th><?= $t('actions') ?></th>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Date de Naissance</th>
+                                <th>Telephone</th>
+                                <th>Email</th>
+                                <th>Adresse</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($patients as $p): ?>
                                 <tr>
-                                    <td><span class="badge bg-primary"><?= htmlspecialchars($p['id']) ?></span></td>
-                                    <td><?= htmlspecialchars($p['nom']) ?></td>
-                                    <td><?= htmlspecialchars($p['prenom']) ?></td>
-                                    <td><?= htmlspecialchars($p['date_naissance']) ?></td>
-                                    <td><?= htmlspecialchars($p['telephone']) ?></td>
-                                    <td><?= htmlspecialchars($p['email']) ?></td>
-                                    <td><?= htmlspecialchars($p['adresse']) ?></td>
+                                    <td><span class="badge badge-primary"><?php echo htmlspecialchars($p['id']); ?></span>
+                                    </td>
+                                    <td><?php echo htmlspecialchars($p['nom']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['prenom']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['date_naissance']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['telephone']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($p['adresse']); ?></td>
                                     <td class="action-buttons">
                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#patientModal"
-                                            onclick="editPatient(<?= htmlspecialchars(json_encode($p)) ?>)">
-                                            <i class="fas fa-edit"></i> <?= $t('edit') ?>
+                                            onclick="editPatient(<?php echo htmlspecialchars(json_encode($p)); ?>)">
+                                            <i class="fas fa-edit"></i> <?= $t('update') ?>
                                         </button>
-                                        <a href="?delete=<?= $p['id'] ?>" class="btn btn-sm btn-danger"
+                                        <a href="?delete=<?php echo $p['id']; ?>" class="btn btn-sm btn-secondary"
                                             onclick="return confirm('<?= $t('confirm_delete_patient') ?>')">
                                             <i class="fas fa-trash"></i> <?= $t('delete') ?>
                                         </a>
@@ -190,7 +192,7 @@ $patients = $patientModel->getAll();
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"><?= $t('add_patient') ?></h5>
+                    <h5 class="modal-title" id="modalTitle">Ajouter un Patient</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form method="POST" id="patientForm">
@@ -199,32 +201,32 @@ $patients = $patientModel->getAll();
                         <input type="hidden" name="id" id="patientId">
 
                         <div class="mb-3">
-                            <label for="nom" class="form-label"><?= $t('name') ?> *</label>
+                            <label for="nom" class="form-label">Nom</label>
                             <input type="text" class="form-control" id="nom" name="nom" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="prenom" class="form-label"><?= $t('first_name') ?> *</label>
+                            <label for="prenom" class="form-label">Prenom</label>
                             <input type="text" class="form-control" id="prenom" name="prenom" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="date_naissance" class="form-label"><?= $t('birth_date') ?></label>
+                            <label for="date_naissance" class="form-label">Date de Naissance</label>
                             <input type="date" class="form-control" id="date_naissance" name="date_naissance">
                         </div>
 
                         <div class="mb-3">
-                            <label for="telephone" class="form-label"><?= $t('phone') ?></label>
+                            <label for="telephone" class="form-label">Telephone</label>
                             <input type="tel" class="form-control" id="telephone" name="telephone">
                         </div>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label"><?= $t('email') ?></label>
+                            <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
                         </div>
 
                         <div class="mb-3">
-                            <label for="adresse" class="form-label"><?= $t('address') ?></label>
+                            <label for="adresse" class="form-label">Adresse</label>
                             <textarea class="form-control" id="adresse" name="adresse" rows="3"></textarea>
                         </div>
                     </div>
@@ -246,18 +248,18 @@ $patients = $patientModel->getAll();
         }
         
         const patientModal = document.getElementById('patientModal');
-        
-        patientModal.addEventListener('show.bs.modal', function(e) {
-            if (e.relatedTarget && e.relatedTarget.textContent.includes('<?= $t('add') ?>')) {
+
+        patientModal.addEventListener('show.bs.modal', (e)=> {
+            if (e.relatedTarget.textContent.includes('<?= $t('add') ?>') ) {
                 document.getElementById('patientForm').reset();
-                document.getElementById('modalTitle').textContent = '<?= $t('add_patient') ?>';
+                document.getElementById('modalTitle').textContent = 'Add Patient';
                 document.getElementById('formAction').value = 'add';
                 document.getElementById('patientId').value = '';
             }
         });
 
         function editPatient(patient) {
-            document.getElementById('modalTitle').textContent = '<?= $t('edit_patient') ?>';
+            document.getElementById('modalTitle').textContent = 'Update Patient';
             document.getElementById('formAction').value = 'edit';
             document.getElementById('patientId').value = patient.id;
             document.getElementById('nom').value = patient.nom;
