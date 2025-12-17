@@ -207,7 +207,7 @@ $departments = $departmentModel->getAll();
                         <h5 class="modal-title" id="departmentModalLabel">Ajouter un Nouveau Departement</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form id="departmentForm" data-action="add" method="POST">
+                    <form id="departmentForm" data-action="add" method="POST" onsubmit="validateForm">
                         <div class="modal-body">
                             <input type="hidden" id="departmentId" name="id">
                             
@@ -234,5 +234,6 @@ $departments = $departmentModel->getAll();
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../utils/validation.js"></script>
 </body>
 </html>
