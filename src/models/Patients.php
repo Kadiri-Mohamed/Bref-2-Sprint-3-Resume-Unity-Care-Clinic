@@ -45,6 +45,14 @@ class Patient {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
+
+    public function findByname($name) {
+        $sql = "SELECT * FROM patients WHERE nom LIKE :name OR prenom LIKE :name";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':name', $name);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
      public function delete($id) {
         $sql = "DELETE FROM patients WHERE id = :id"; 

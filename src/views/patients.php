@@ -154,6 +154,7 @@ $patients = $patientModel->getAll();
             <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#patientModal">
                 <i class="fas fa-plus"></i> <?= $t('add') ?> Patient
             </button>
+            <input type="text" id="searchInput" class=" rounded-md" placeholder="Search a patient">
         </div>
 
         <div class="card">
