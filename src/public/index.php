@@ -5,6 +5,8 @@ require_once '../models/Medecins.php';
 require_once '../models/Departments.php';
 require_once '../models/Patients.php';
 
+Session::requireLogin();
+
 // instances
 $patientModel = new Patient();
 $departmentModel = new Department();
@@ -47,9 +49,9 @@ $recentMedecins = $medecinModel->getAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    
+
     <?php if ($lang == 'ar'): ?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <?php endif; ?>
 </head>
 
@@ -60,15 +62,14 @@ $recentMedecins = $medecinModel->getAll();
                 <a class="navbar-brand" href="index.php">
                     <i class="fas fa-hospital"></i> Unity Care Clinic
                 </a>
-                
-                <!-- langue -->
+
                 <div class="language-selector me-3">
                     <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
                         <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
                         <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
                     </select>
                 </div>
-                
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -94,6 +95,20 @@ $recentMedecins = $medecinModel->getAll();
                                 <i class="fas fa-user-md"></i> <?= $t('medecins') ?>
                             </a>
                         </li>
+
+                        <?php if (Session::isLoggedIn()): ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle"></i>
+                                    <?= htmlspecialchars(Session::get('user_username')) ?>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="../auth/logout.php">
+                                            <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                        </a></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -126,7 +141,7 @@ $recentMedecins = $medecinModel->getAll();
                     </div>
                 </div>
 
-                
+
                 <!-- Medecins -->
                 <div class="col-md-4">
                     <div class="stat-card card-medecins">
@@ -158,7 +173,7 @@ $recentMedecins = $medecinModel->getAll();
                     </div>
                 </div>
             </div>
-            
+
             <!-- Patients -->
             <div class="row mt-4">
                 <div class="col-12">
@@ -330,7 +345,7 @@ $recentMedecins = $medecinModel->getAll();
                 scales: {
                     x: {
                         ticks: {
-                            color: '#ffffff' 
+                            color: '#ffffff'
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'

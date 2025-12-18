@@ -3,6 +3,7 @@ require_once '../config/database.php';
 require_once '../config/Language.php';
 require_once '../models/Medecins.php';
 require_once '../models/Departments.php';
+Session::requireLogin();
 
 $medecinModel = new Medecin();
 $departmentModel = new Department();

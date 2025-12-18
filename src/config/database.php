@@ -1,4 +1,8 @@
 <?php
+require_once 'Language.php';
+require_once 'Session.php';
+
+Session::init();
 
 class Database
 {

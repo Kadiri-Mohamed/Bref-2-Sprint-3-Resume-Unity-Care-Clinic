@@ -2,6 +2,7 @@
 require_once '../config/database.php';
 require_once '../config/Language.php';
 require_once '../models/Departments.php';
+Session::requireLogin();
 
 $departmentModel = new Department();
 $message = '';

@@ -2,6 +2,7 @@
 require_once '../config/database.php';
 require_once '../config/Language.php';
 require_once '../models/Patients.php';
+Session::requireLogin();
 
 $patientModel = new Patient();
 $message = '';
