@@ -72,49 +72,64 @@ $patients = $patientModel->getAll();
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../public/index.php">
-                <i class="fas fa-hospital"></i> Unity Care Clinic
-            </a>
-            
-            <!-- Sélecteur de langue -->
-            <div class="language-selector me-3">
-                <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
-                    <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
-                    <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
-                </select>
+     <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="../public/index.php">
+                    <i class="fas fa-hospital"></i> Unity Care Clinic
+                </a>
+
+                <div class="language-selector me-3">
+                    <select class="form-select form-select-sm" onchange="changeLanguage(this.value)">
+                        <option value="fr" <?= $lang == 'fr' ? 'selected' : '' ?>><?= $t('french') ?></option>
+                        <option value="en" <?= $lang == 'en' ? 'selected' : '' ?>><?= $t('english') ?></option>
+                    </select>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../public/index.php">
+                                <i class="fas fa-home"></i> <?= $t('dashboard') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/patients.php">
+                                <i class="fas fa-user-injured"></i> <?= $t('patients') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/departments.php">
+                                <i class="fas fa-building"></i> <?= $t('departments') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../views/medecins.php">
+                                <i class="fas fa-user-md"></i> <?= $t('medecins') ?>
+                            </a>
+                        </li>
+
+                        <?php if (Session::isLoggedIn()): ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle"></i>
+                                    <?= htmlspecialchars(Session::get('user_username')) ?>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="../auth/logout.php">
+                                            <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                        </a></li>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../public/index.php">
-                            <i class="fas fa-home"></i> <?= $t('dashboard') ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="patients.php">
-                            <i class="fas fa-user-injured"></i> <?= $t('patients') ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="departments.php">
-                            <i class="fas fa-building"></i> <?= $t('departments') ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="medecins.php">
-                            <i class="fas fa-user-md"></i> <?= $t('medecins') ?>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <div class="container mt-4">
         <h1 class="page-title">
